@@ -1,11 +1,21 @@
 {% extends 'blog/base.html' %}
 
 {% block content %}
-<a class="btn btn-default" href="{% url 'blog:post_edit' pk=post.pk %}"><span class="glyphicon glyphicon-pencil">수정하기</span></a>
-<div class ="post">
+<a class="btn btn-default" href="{% url 'blog:post_edit' pk=post.pk %}"><span
+        class="glyphicon glyphicon-pencil">수정하기</span></a>
+<div class="post">
     <h1><a href="">{{ post.title }}</a></h1>
     <p>{{ post.text|linebreaksbr }}</p>
-    <p>{{ post.author.first_name }} {{ post.published_date }}</p>
+    <p>{{ post.author.first_name }}
+        {% if post.published_date %}
+    <div class="date">
+        {{ post.published_date }}
+    </div>
+    {% else %}
+    <a class="btn btn-default" href="{% url 'blog:post_publish' pk=post.pk %}">Publish</a>
+    {% endif %}
+    <a class="btn btn-default" href="{% url 'blog:post_remove' pk=post.pk %}"><span class="glyphicon glyphicon-remove">삭제하기</span></a>
+
 </div>
 
 {% endblock %}
